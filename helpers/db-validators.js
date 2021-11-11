@@ -16,7 +16,7 @@ const esRolValido =  async (rol = '') => {
 }
 
 const idUserExist =  async ( id ) => {
-  const existeId = await Role.findById( id );
+  const existeId = await Usuario.findById( id );
   if ( !existeId ) {
     throw new Error(`El id < ${id} > no esta registrado en la DB`);
   }
