@@ -4,8 +4,8 @@ const { dbConnection } = require('../database/config');
 
 class Server {
   constructor() {
-    this.usersPath = '/api/users'
-
+    this.usersPath = '/api/users';
+    this.authPath = '/api/auth';
     this.app = express();
     this.port = process.env.PORT;
 
@@ -35,7 +35,8 @@ class Server {
   }
 
   routes() {
-    this.app.use(this.usersPath, require('../routes/user'))
+    this.app.use(this.authPath, require('../routes/auth'));
+    this.app.use(this.usersPath, require('../routes/user'));
   }
 
   listen() {
