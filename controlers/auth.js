@@ -45,11 +45,21 @@ const login = async (req, res = response) => {
       msg: 'Hable con el administrador'
     });
   }
+}
 
+const googleSingIn = async(req, res = response) => {
+
+  const { id_token } = req.body;
+
+  res.json({
+    msg:'Todo Ok',
+    id_token
+  })
 }
 
 
 
 module.exports = {
-  login
+  login,
+  googleSingIn
 }

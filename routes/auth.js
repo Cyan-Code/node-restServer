@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { login } = require('../controlers/auth');
+const { login, googleSingIn } = require('../controlers/auth');
 const { validarCampos } = require('../middlewares/validar-campos');
 
 const router = Router();
@@ -10,6 +10,11 @@ router.post('/login',[
   check('password', 'La contraseña es obligatoria').not().isEmpty(),
   validarCampos
 ], login);
+
+router.post('/google',[
+  check('id_token', 'id_token obligatorio').not().isEmpty(),
+  validarCampos
+], googleSingIn);
 
 
 
