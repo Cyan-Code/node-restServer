@@ -11,7 +11,7 @@
     <hr />
     <div
       id="g_id_onload"
-      data-client_id="303177563477-s33o0okvvfbpgnaoqq8bq1uqh2crnab0.apps.googleusercontent.com"
+      data-client_id="GoogleId"
       data-auto_prompt="false"
       data-callback="handleCredentialResponse">
     </div>
@@ -24,6 +24,10 @@
       data-shape="rectangular"
       data-logo_alignment="left">
     </div>
+
+    <button id="google_singout">
+      LogOut
+    </button>
 
     <script>
       function handleCredentialResponse(response) {
@@ -40,10 +44,21 @@
         )
         .then(resp => resp.json())
         .then(resp => {
+          localStorage.setItem('email', resp.usuario.correo);
           console.log(resp);
         })
         .catch( console.warn() )
       }
+
+      const logout = document.getElementById('google_singout');
+      logout.onclick = () => {
+        google.accounts.id.disableAutoSelect();
+        google.accounts.id.revoke(localStorage.getItem('email'), done => {
+          localStorage.clear();
+          location.reload();
+        })
+      }
+
     </script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
   </body>
