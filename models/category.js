@@ -11,7 +11,7 @@ const CategorySchema = Schema({
       required: true
   },
   usuario: {
-      type: Schema.Types.ObjectId, //Docs (167) 
+      type: Schema.Types.ObjectId, //Docs (167) Docs Relations in Mongo db
       ref: 'Usuario',
       require: true
   }

@@ -1,30 +1,35 @@
 const { Router } = require('express');
+const { check } = require('express-validator');
+
+const {
+        getCategories,
+        getCategory,
+        createCategory,
+        updateCategory,
+        deleteCategory
+    } = require('../controlers/category');
+const { validarJWT, haveRol, validarCampos } = require('../middlewares');
 
 const router = Router();
 
 //Obtener categorias - publico
-router.get('/', (req, res) => {
-    res.json('get');
-});
+router.get('/', getCategories);
 
 //Obtener categoria por id - publico
-router.get('/:id', (req, res) => {
-    res.json('get-id')
-});
+router.get('/:id', getCategory);
 
 //Crear una categoria - Solo token admitidos
-router.post('/', (req, res)=>{
-    res.json('post')
-})
+router.post('/', [
+    validarJWT,
+    haveRol('ADMIN_ROLE', 'VENTAS_ROL'),
+    check('nombre', 'El nombre es obligatorio').notEmpty(),
+    validarCampos
+], createCategory);
 
 //Actualizar una categoria - Solo token validos
-router.put('/:id', (req, res) => {
-    res.json('put')
-})
+router.put('/:id', updateCategory);
 
 //Eliminar categoria por id - Solo administradores
-router.delete('/:id', (req, res) => {
-    res.json('delete')
-})
+router.delete('/:id', deleteCategory);
 
 module.exports = router;
