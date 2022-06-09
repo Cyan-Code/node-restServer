@@ -1,5 +1,4 @@
 const { response, request } = require('express');
-const { isValidObjectId } = require('mongoose');
 
 const Category = require('../models/category');
 
@@ -10,7 +9,7 @@ const getCategories = async(req = request, res = response) => {
             Category.countDocuments({estado: true}),
             Category
                 .find({estado:true})
-                .populate('usuario') // Relaciones en Mongoose | "traeme de ese campo, lo que tengas relacionado"
+                .populate('usuario', 'name') // Relaciones en Mongoose | "traeme de ese campo, lo que tengas relacionado"
                 .skip(Number(desde))
                 .limit(parseInt(hasta))// Aqui se ven las relaciones
         ]
@@ -21,17 +20,8 @@ const getCategories = async(req = request, res = response) => {
 }
 
 const getCategory = async(req = request, res = response) => {
-    const {id} = req.params;
-    const isValid = isValidObjectId(id);
-    if (!isValid) {
-        return res.status(400).json('Id no valido')
-    }
-    //Verificar que el id exista y sea de mongo
-    const category = await Category.findById(id);
-    if (!category) {
-        return res.status(404).json('Categoria no encontrada');
-    }
-    res.json('get-id')
+    const category = await Category.findById(req.params.id).populate('usuario', 'name');
+    return res.json(category);
 };
 
 const createCategory = async (req = request, res = response) => {
@@ -52,12 +42,19 @@ const createCategory = async (req = request, res = response) => {
     return res.status(201).json(category);
 };
 
-const updateCategory = (req, res = response) => {
-    res.json('update')
+const updateCategory = async(req = request, res = response) => {
+    const {id} = req.params;
+    const {nombre, estado, usuario, ...data} = req.body;
+    data.name = nombre.toUpperCase();
+    data.usuario = req.usuario._id;
+    const category = await Category.findByIdAndUpdate(id, data, {new:true});//Tercer argumento ayuda a que se vea la info actualizada de una vez
+    return res.json({category});
 };
 
-const deleteCategory = (req, res = response) => {
-    res.json('Delete')
+const deleteCategory = async(req = request, res = response) => {
+    const {id} = req.params;
+    await Category.findByIdAndUpdate(id, {estado: false});
+    return res.json('Delete')
 };
 
 

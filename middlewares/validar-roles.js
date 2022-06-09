@@ -19,7 +19,6 @@ const isAdminRole = ( req, res = response, next ) => {
 
 const haveRol = ( ...roles ) => {
   return (req, res = response, next) => {
-
     if( !req.usuario ) {
       return res.status(500).json({
         msg: 'Se quiere verificar el Rol sin validar Token'
