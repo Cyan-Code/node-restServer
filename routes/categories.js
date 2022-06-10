@@ -39,7 +39,7 @@ router.put('/:id', [
     check('id').custom( idCategoryExist ),
     check('nombre', 'Debes asignar un nuevo nombre').notEmpty(),
     validarCampos
-],updateCategory);
+], updateCategory);
 
 //Eliminar categoria por id - Solo administradores
 router.delete('/:id', [
