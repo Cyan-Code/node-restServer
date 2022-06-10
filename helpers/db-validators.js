@@ -11,7 +11,6 @@ const emailValido = async (correo = '') => {
 
 const esRolValido =  async (rol = '') => {
   const existeRol = await Role.findOne({rol:rol});
-  console.log(rol);
   if (!existeRol) {
     throw new Error(`El rol ${rol} no esta registrado en la DB`);
   }

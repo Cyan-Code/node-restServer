@@ -26,7 +26,7 @@ const getCategory = async(req = request, res = response) => {
 
 const createCategory = async (req = request, res = response) => {
     const name = req.body.nombre.toUpperCase();
-    const existCategory = await Category.findOne({name})
+    const existCategory = await Category.findOne({name});
     if (existCategory) {
         return res.status(400).json({
             msg: `la categoria ${name} ya existe`
