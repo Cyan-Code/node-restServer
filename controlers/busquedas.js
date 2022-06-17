@@ -1,12 +1,23 @@
 const {request, response} = require('express');
+const { buscarUsuarios,
+        buscarCategorias,
+        buscarProductos } = require('../helpers/busquedasDb');
+//'roles'
 
 const busqueda = (req = request, res = response) => {
-    //TODO: Hacer las funciones async que resivan la request y el 
-            //TODO: termino limpio pero que hagan las consultas [NO SE SI SE PUEDA]
+    const { coleccion, termino } = req.params;
+    switch (coleccion) {
+        case 'usuarios':
+            return buscarUsuarios(termino, res);//Nueva forma de aplicar el response a funciones que no sean middlewares ni controladores
+        case 'products':
+            return buscarProductos(termino, req, res);
+        case 'categories':
+            return buscarCategorias(termino, res)
+        default:
+            break;
+    }
     res.json('Buscar...');
 }
-
-
 
 module.exports = {
     busqueda
