@@ -9,7 +9,7 @@ const getCategories = async(req = request, res = response) => {
             Category.countDocuments({estado: true}),
             Category
                 .find({estado:true})
-                .populate('usuario', 'name') // Relaciones en Mongoose | "traeme de ese campo, lo que tengas relacionado"
+                .populate('usuario', 'name') // Relaciones en Mongoose | "traeme de ese campo, lo que tengas relacionado | lo que quiero que me traigas"
                 .skip(Number(desde))
                 .limit(parseInt(hasta))// Aqui se ven las relaciones
         ]

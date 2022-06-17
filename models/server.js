@@ -6,6 +6,7 @@ class Server {
   constructor() {
     this.paths = {
       authPath: '/api/auth',
+      searchPath: '/api/busqueda',
       categoryPath: '/api/categories',
       productosPath: '/api/product',
       usersPath: '/api/users',
@@ -42,6 +43,7 @@ class Server {
     this.app.use(this.paths.authPath, require('../routes/auth'));
     this.app.use(this.paths.categoryPath, require('../routes/categories'));
     this.app.use(this.paths.productosPath, require('../routes/productos'));
+    this.app.use(this.paths.searchPath, require('../routes/busquedas'))
     this.app.use(this.paths.usersPath, require('../routes/user'));
   }
 
