@@ -1,15 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const { dbConnection } = require('../database/config');
+const fileUpload = require('express-fileupload'); //importacion
 
 class Server {
   constructor() {
     this.paths = {
-      authPath: '/api/auth',
-      searchPath: '/api/busqueda',
-      categoryPath: '/api/categories',
+      authPath:      '/api/auth',
+      searchPath:    '/api/busqueda',
+      categoryPath:  '/api/categories',
       productosPath: '/api/product',
-      usersPath: '/api/users',
+      usersPath:     '/api/users',
+      uploadsPath:   '/api/uploads'
     }
     this.app = express();
     this.port = process.env.PORT;
@@ -37,14 +39,18 @@ class Server {
 
     // Directorio Publico
     this.app.use(express.static('public'));
+
+    // For File Uploads
+    this.app.use( fileUpload ({ useTempFiles : true, tempFileDir : '/tmp/' }));//Uso como middleware a nivel del servidor, para poder aceptar archivos por peticiones
   }
 
   routes() {
-    this.app.use(this.paths.authPath, require('../routes/auth'));
-    this.app.use(this.paths.categoryPath, require('../routes/categories'));
+    this.app.use(this.paths.authPath,      require('../routes/auth'));
+    this.app.use(this.paths.categoryPath,  require('../routes/categories'));
     this.app.use(this.paths.productosPath, require('../routes/productos'));
-    this.app.use(this.paths.searchPath, require('../routes/busquedas'))
-    this.app.use(this.paths.usersPath, require('../routes/user'));
+    this.app.use(this.paths.searchPath,    require('../routes/busquedas'))
+    this.app.use(this.paths.usersPath,     require('../routes/user'));
+    this.app.use(this.paths.uploadsPath,   require('../routes/uploads'));
   }
 
   listen() {
