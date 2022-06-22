@@ -41,7 +41,12 @@ class Server {
     this.app.use(express.static('public'));
 
     // For File Uploads
-    this.app.use( fileUpload ({ useTempFiles : true, tempFileDir : '/tmp/' }));//Uso como middleware a nivel del servidor, para poder aceptar archivos por peticiones
+    this.app.use( fileUpload ({
+      useTempFiles: true,
+      tempFileDir : '/tmp/',
+      createParentPath: true
+    }));
+    //Uso como middleware a nivel del servidor, para poder aceptar archivos por peticiones
   }
 
   routes() {
