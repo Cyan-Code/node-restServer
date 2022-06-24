@@ -38,10 +38,7 @@ const idProductExist = async (id) => {
 
 const availableColections = (coleccion='', coleccions = []) => {
   const include = coleccions.includes(coleccion);
-  console.log(include)
-  if (!include) {
-    throw new Error(`La Colecion ${ coleccion } no esta permitida`);
-  }
+  if (!include) throw new Error(`La Colecion ${ coleccion } no esta permitida`);
   return true //Reasons but this works? and the others doesnt need this???
 }
 
