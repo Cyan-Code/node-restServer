@@ -14,5 +14,11 @@ const cargarArchivo = async (req = request, res = response) => {
     }
 }
 
+const updateFile = (req = request, res = response) => {
+    return res.json( 'updateFile' );
+}
 
-module.exports = cargarArchivo;
+module.exports = {
+    cargarArchivo,
+    updateFile
+};

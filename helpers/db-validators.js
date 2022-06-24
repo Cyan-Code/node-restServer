@@ -36,10 +36,20 @@ const idProductExist = async (id) => {
   if (!product) throw new Error(`No se encontro este producto ${id}`);
 }
 
+const availableColections = (coleccion='', coleccions = []) => {
+  const include = coleccions.includes(coleccion);
+  console.log(include)
+  if (!include) {
+    throw new Error(`La Colecion ${ coleccion } no esta permitida`);
+  }
+  return true //Reasons but this works? and the others doesnt need this???
+}
+
 module.exports = {
   esRolValido,
   emailValido,
   idUserExist,
   idCategoryExist,
-  idProductExist
+  idProductExist,
+  availableColections
 }
