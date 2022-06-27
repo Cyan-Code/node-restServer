@@ -4,14 +4,14 @@ const Category = require('../models/category');
 
 const getCategories = async(req = request, res = response) => {
     const {hasta = 5, desde = 0} = req.query;
-    const [total, categories] = await Promise.all(//El Val, de la [primera, segunda] ...
+    const [total, categories] = await Promise.all(
         [
             Category.countDocuments({estado: true}),
             Category
                 .find({estado:true})
-                .populate('usuario', 'name') // Relaciones en Mongoose | "traeme de ese campo, lo que tengas relacionado | lo que quiero que me traigas"
+                .populate('usuario', 'name')
                 .skip(Number(desde))
-                .limit(parseInt(hasta))// Aqui se ven las relaciones
+                .limit(parseInt(hasta))
         ]
     );
     return res.json({
@@ -35,7 +35,7 @@ const createCategory = async (req = request, res = response) => {
     // Generate data to save
     const data = {
         name,
-        usuario: req.usuario._id //new ObjectId("ID") (relations in mongo)
+        usuario: req.usuario._id
     }
     const category = new Category(data)
     await category.save();
@@ -47,7 +47,7 @@ const updateCategory = async(req = request, res = response) => {
     const {nombre, estado, usuario, ...data} = req.body;
     data.name = nombre.toUpperCase();
     data.usuario = req.usuario._id;
-    const category = await Category.findByIdAndUpdate(id, data, {new:true});//Tercer argumento ayuda a que se vea la info actualizada de una vez
+    const category = await Category.findByIdAndUpdate(id, data, {new:true});
     return res.json({category});
 };
 

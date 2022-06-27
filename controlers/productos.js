@@ -28,7 +28,7 @@ const getProduct = async(req = request, res = response) => {
 const createProduct = async (req = request, res = response) => {
     const { estado, usuario, descripcion, ...rest } = req.body;
     const name = req.body.name.toUpperCase();
-    const existProduct = await Product.findOne({name});// Al parecer los parametros solo se aceptan en la estructura dada por el modelo nombre != name por eso no lo encontraba
+    const existProduct = await Product.findOne({name});
     if (existProduct) return res.json(`El producto "${name}" ya existe`);
     const data = {
         ...rest,

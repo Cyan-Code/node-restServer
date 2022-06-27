@@ -1,5 +1,3 @@
-//const { isValidObjectId } = require("mongoose"); Otra forma de validar el id
-
 const Category = require("../models/category");
 const Product = require("../models/productos");
 const Usuario = require("../models/usuario");
@@ -11,11 +9,11 @@ const buscarUsuarios = async (termino = '', res) => {
     if (isValidId) {
         const usuario = await Usuario.findById(termino);
         return res.json({
-            result: (usuario) ? [usuario] : [] // Nueva forma de usar el retorno
+            result: (usuario) ? [usuario] : []
         });
     }
-    const regex = new RegExp(termino, 'i');//Como funciona esto?
-    const usuarios = await Usuario.find({ // Clausulas de busqueda Mongoose
+    const regex = new RegExp(termino, 'i');
+    const usuarios = await Usuario.find({
         $or: [{nombre: termino}, {correo: regex}],
         $and: [{estado: true}]
     });

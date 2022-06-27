@@ -21,9 +21,9 @@ const updateFile = async (req = request, res = response) => {
     const modelo = req.model;
     const { coleccion } = req.params;
     if (modelo.img) {
-        const pathImg = path.join(__dirname, '../uploads', coleccion, modelo.img) // Hallar un path existente [el ultimo arg es el nombre de la img]
-        if (fs.existsSync(pathImg)) { // pasar path para encontrar un archivo existente
-            fs.unlinkSync(pathImg); // Eliminar el archivo
+        const pathImg = path.join(__dirname, '../uploads', coleccion, modelo.img);
+        if (fs.existsSync(pathImg)) {
+            fs.unlinkSync(pathImg);
         }
     }
     const pathImg = await uploadFile( req.files, undefined, coleccion);

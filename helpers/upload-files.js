@@ -2,7 +2,7 @@ const path = require('path');
 const {v4: uuidv4} = require('uuid');
 
 const defaultExtensions = ['png', 'jpg', 'jpeg', 'gif'];
-// TODO: Un gist de esto o si no DOCS
+
 const uploadFile = (files, availableExtensions = defaultExtensions, folder = '') => {
     return new Promise ( (resolve, reject) => {
         const { archivo } = files;

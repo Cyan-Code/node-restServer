@@ -39,7 +39,7 @@ const idProductExist = async (id) => {
 const availableColections = (coleccion='', coleccions = []) => {
   const include = coleccions.includes(coleccion);
   if (!include) throw new Error(`La Colecion ${ coleccion } no esta permitida`);
-  return true //Reasons but this works? and the others doesnt need this???
+  return true
 }
 
 module.exports = {
